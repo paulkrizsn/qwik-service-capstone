@@ -456,7 +456,7 @@
       client.on("answered", () => { setUi(true, false); setState("stConnected", "live"); startTimer(); });
       client.on("muted", () => { muted = true; muteBtn.textContent = t("unmute"); });
       client.on("unmuted", () => { muted = false; muteBtn.textContent = t("mute"); });
-      client.on("transcription", (e) => (e.messages || []).forEach((m) => addLine(e.originator === "local" ? t("you") : t("qwik"), m.text)));
+      client.on("transcription", (e) => (e.messages || []).forEach((m) => addLine(/^(user|local|caller|customer)$/i.test(e.originator) ? t("you") : t("qwik"), m.text)));
       client.on("ended", () => { reset("stEnded"); client.destroy(); client = null; });
       client.on("failed", () => { reset("stFailed", "error"); client && client.destroy(); client = null; });
       client.on("error", () => setState("stError", "error"));
